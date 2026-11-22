@@ -6,7 +6,7 @@ app = FastAPI()
 def load_data():
     with open(r'D:\Sem-05\FastAPI\Projects\student-management\patients.json', 'r') as f:
         data = json.load(f)
-        return data
+    return data
 
 @app.get("/")
 def home():
@@ -25,13 +25,15 @@ def view():
     return load_data()
 
 
-# # POST method -> add student
-# @app.get("/students/{student_id}")
-# def get_student(student_id: int):
-#     return students[student_id]
+@app.get("/patient/{patient_id}")
+def view_patient(patient_id: str):
+    #load all patients
+    data =  load_data()
+
+    if patient_id in data:
+        return data[patient_id]
+    else:
+        return "patient not found"
 
 
-# PUT method - > update the student information
-
-# @app.get("/students")
 
