@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Path
+from fastapi import FastAPI, Path, HTTPException
 import json
 app = FastAPI()
 
@@ -40,6 +40,23 @@ def view():
 
 # path paramter + path function
 
+# @app.get("/patient/{patient_id}")
+# def view_patient(patient_id: str = Path(..., description='ID of the patient in the DB', example='P001')):
+#     #load all patients
+#     data =  load_data()
+
+#     if patient_id in data:
+#         return data[patient_id]
+#     else:
+#         return "patient not found"
+
+
+
+# An HTTP exception you can raise in your own code to show errors to the client.
+
+# This is for client errors, invalid authentication, invalid data, etc. Not for server errors in your code.
+# addition of HTTP method
+#     
 @app.get("/patient/{patient_id}")
 def view_patient(patient_id: str = Path(..., description='ID of the patient in the DB', example='P001')):
     #load all patients
@@ -48,9 +65,4 @@ def view_patient(patient_id: str = Path(..., description='ID of the patient in t
     if patient_id in data:
         return data[patient_id]
     else:
-        return "patient not found"
-
-
-
-# addition of HTTP method
-#     
+        raise HTTPException(status_code=404, detail='Patient not found')
